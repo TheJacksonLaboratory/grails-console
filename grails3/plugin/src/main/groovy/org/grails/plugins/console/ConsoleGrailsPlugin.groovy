@@ -1,6 +1,9 @@
 package org.grails.plugins.console
 
+import grails.config.Config
 import grails.plugins.*
+import org.grails.config.NavigableMapConfig
+import org.grails.config.PropertySourcesConfig
 
 class ConsoleGrailsPlugin extends Plugin {
 
@@ -22,12 +25,13 @@ class ConsoleGrailsPlugin extends Plugin {
     def scm = [url: 'https://github.com/sheehan/grails-console']
 
     void doWithApplicationContext() {
-        config.grails.assets.plugin.'console'.excludes = ['**/*']
+        config.merge(['grails':['assets':['plugin':['console': ['excludes': ['**/*']]]]]])
 
         ConsoleUtil.initJsonConfig()
     }
 
     Closure doWithSpring() {{->
-        consoleConfig(ConsoleConfig, config.grails.plugin.console)
+        Config blankConfig = new PropertySourcesConfig()
+        consoleConfig(ConsoleConfig, config.getProperty('grails.plugin.console', NavigableMap, blankConfig))
     }}
 }

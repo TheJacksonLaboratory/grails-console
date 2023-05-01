@@ -16,42 +16,42 @@ class ConsoleConfig {
 
     ConsoleConfig(Map config) {
 
-        if (config.enabled instanceof Boolean) {
-            enabled = config.enabled
+        if (config.getAt('enabled') instanceof Boolean) {
+            enabled = config.getAt('enabled')
         } else {
             enabled = Environment.current == Environment.DEVELOPMENT
         }
 
-        if (config.newFileText instanceof String) {
-            newFileText = config.newFileText
+        if (config.getAt('newFileText') instanceof String) {
+            newFileText = config.getAt('newFileText')
         }
 
-        if (config.indentWithTabs instanceof Boolean) {
-            indentWithTabs = config.indentWithTabs
+        if (config.getAt('indentWithTabs') instanceof Boolean) {
+            indentWithTabs = config.getAt('indentWithTabs')
         }
 
-        if (config.tabSize instanceof Integer) {
-            tabSize = config.tabSize
+        if (config.getAt('tabSize') instanceof Integer) {
+            tabSize = config.getAt('tabSize')
         }
 
-        if (config.indentUnit instanceof Integer) {
-            indentUnit = config.indentUnit
+        if (config.getAt('indentUnit') instanceof Integer) {
+            indentUnit = config.getAt('indentUnit')
         }
 
-        if (config.fileStore.remote.defaultPath instanceof String) {
-            remoteFileStoreDefaultPath = config.fileStore.remote.defaultPath
+        if (config.getAt('fileStore.remote.defaultPath') instanceof String) {
+            remoteFileStoreDefaultPath = config.getAt('fileStore.remote.defaultPath')
         }
 
-        if (config.fileStore.remote.enabled instanceof Boolean) {
-            remoteFileStoreEnabled = config.fileStore.remote.enabled
+        if (config.getAt('fileStore.remote.enabled') instanceof Boolean) {
+            remoteFileStoreEnabled = config.getAt('fileStore.remote.enabled')
         }
 
-        if (config.csrfProtection.enabled instanceof Boolean) {
-            csrfProtectionEnabled = config.csrfProtection.enabled
+        if (config.getAt('csrfProtection.enabled') instanceof Boolean) {
+            csrfProtectionEnabled = config.getAt('csrfProtection.enabled')
         }
 
-        if (config.baseUrl instanceof List || config.baseUrl instanceof String) {
-            baseUrl = config.baseUrl
+        if (config.getAt('baseUrl') instanceof List || config.getAt('baseUrl') instanceof String) {
+            baseUrl = config.getAt('baseUrl')
         }
     }
 }
