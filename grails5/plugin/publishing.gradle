@@ -1,0 +1,57 @@
+//import java.util.regex.Matcher
+
+apply plugin:"maven-publish"
+apply plugin: 'java'
+apply plugin: 'java-library'
+
+
+///**
+// * This isn't an ideal solution for publishing with maven-publish, but was needed as a quick fix to increment the grails
+// * version in response to a vulnerability.  Fix came from:
+// * https://github.com/spring-gradle-plugins/dependency-management-plugin/issues/257
+// *
+// * When publishing without this, a duplicate <dependencyManagement> node is added to the pom xml generated which
+// * disrupts publishing.
+// *
+// * Prior to this, grails-publish plugin was used which was removed in grails 4.0.11
+// *
+// */
+//tasks.withType(GenerateMavenPom).all {
+//    doLast {
+//        File file = new File("$buildDir/publications/maven/pom-default.xml")
+//        def text = file.text
+//        def pattern = "(?s)(<dependencyManagement>.+?<dependencies>)(.+?)(</dependencies>.+?</dependencyManagement>)"
+//        Matcher matcher = text =~ pattern
+//        if (matcher.find()) {
+//            text = text.replaceFirst(pattern, "")
+//            def firstDeps = matcher.group(2)
+//            text = text.replaceFirst(pattern, '$1$2' + firstDeps + '$3')
+//        }
+//        file.write(text)
+//    }
+//}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+// the username, password, and mavenPluginReleaseUrl can be set globally in ~/.gradle/gradle.properties with the
+// exact property names
+// listed below so for example mavenRepoUsername=foo
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url(findProperty('mavenPluginReleaseUrl'))
+            credentials {
+                username(findProperty('mavenRepoUsername'))
+                password(findProperty('mavenRepoPassword'))
+            }
+        }
+    }
+}
