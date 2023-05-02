@@ -1,0 +1,84 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+    }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.1"
+}
+
+apply plugin:"eclipse"
+apply plugin:"idea"
+apply plugin:"org.grails.grails-plugin"
+apply plugin:"org.grails.grails-gsp"
+apply from: 'publishing.gradle'
+
+version "3.0.1"
+group "org.grails.plugins"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://repo.grails.org/grails/core" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.grails:grails-bom:$grailsVersion"
+    }
+    applyMavenExclusions false
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
+
+    implementation "org.grails:grails-web-boot"
+    implementation 'commons-io:commons-io:2.4'
+
+    implementation "org.grails:grails-core"
+    implementation "org.grails:grails-logging"
+    implementation "org.grails:grails-plugin-rest"
+    implementation "org.grails:grails-plugin-i18n"
+    implementation "org.grails:grails-plugin-services"
+    implementation "org.grails:grails-plugin-url-mappings"
+    implementation "org.grails:grails-plugin-interceptors"
+    implementation "org.grails.plugins:gsp"
+    implementation "org.grails:grails-console"
+    profile "org.grails.profiles:web-plugin"
+    implementation "org.grails:grails-plugin-services"
+    implementation "org.grails:grails-plugin-domain-class"
+    testImplementation "org.grails:grails-web-testing-support"
+    testImplementation 'net.bytebuddy:byte-buddy:1.14.0'
+}
+
+task repairPublicFiles(type: Copy) { // https://github.com/grails/grails-core/issues/629
+    from 'src/main/resources/static'
+    into 'build/resources/main/static'
+}
+processResources.finalizedBy repairPublicFiles
+bootJarMainClassName.dependsOn('repairPublicFiles')
+jar.dependsOn('repairPublicFiles')
+
+bintray {
+    pkg {
+        repo = 'grails-plugins'
+        userOrg = 'sheehan'
+        name = 'console'
+        desc = 'A web-based Groovy console for interactive runtime application management and debugging.'
+        websiteUrl = 'https://grails.org/plugins.html#plugin/console'
+        issueTrackerUrl = 'https://github.com/sheehan/grails-console/issues'
+        vcsUrl = 'https://github.com/sheehan/grails-console'
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
+        attributes = [pluginScope: 'runtime']
+    }
+}
+

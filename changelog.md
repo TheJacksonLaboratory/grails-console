@@ -1,3 +1,9 @@
+### v3.0.0
+* Added support for Grails 5 and Java 17
+
+### v2.2.1
+*   Remove deprecated uses of dot notation from config
+
 ### v2.2.0
 *   Fix for Console hijacking `System.out` and breaking system logs
 *   Fix for `NullPointerException` when running empty script on server with `grails.databinding.convertEmptyStringsToNull` set to default value `true`

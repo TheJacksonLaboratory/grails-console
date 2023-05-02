@@ -11,6 +11,8 @@ The [2.0.X](http://plugins.grails.org/plugin/sheehan/console) version is for Gra
 
 The [2.1.X](http://plugins.grails.org/plugin/sheehan/console) version is for Grails 3.3+.
 
+The [3.0.X](http://plugins.grails.org/plugin/sheehan/console) version is for Grails 5.0+.
+
 ### Grails 2
 
 Add a dependency in BuildConfig.groovy:
