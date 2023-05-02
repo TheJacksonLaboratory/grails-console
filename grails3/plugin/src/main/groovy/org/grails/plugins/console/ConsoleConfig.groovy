@@ -1,6 +1,7 @@
 package org.grails.plugins.console
 
 import grails.util.Environment
+import org.grails.config.PropertySourcesConfig
 
 class ConsoleConfig {
 
@@ -15,43 +16,44 @@ class ConsoleConfig {
     def baseUrl
 
     ConsoleConfig(Map config) {
+        PropertySourcesConfig srcConfig = config
 
-        if (config.getAt('enabled') instanceof Boolean) {
-            enabled = config.getAt('enabled')
+        if (srcConfig.navigate('enabled') instanceof Boolean) {
+            enabled = srcConfig.navigate('enabled')
         } else {
             enabled = Environment.current == Environment.DEVELOPMENT
         }
 
-        if (config.getAt('newFileText') instanceof String) {
-            newFileText = config.getAt('newFileText')
+        if (srcConfig.navigate('newFileText') instanceof String) {
+            newFileText = srcConfig.navigate('newFileText')
         }
 
-        if (config.getAt('indentWithTabs') instanceof Boolean) {
-            indentWithTabs = config.getAt('indentWithTabs')
+        if (srcConfig.navigate('indentWithTabs') instanceof Boolean) {
+            indentWithTabs = srcConfig.navigate('indentWithTabs')
         }
 
-        if (config.getAt('tabSize') instanceof Integer) {
-            tabSize = config.getAt('tabSize')
+        if (srcConfig.navigate('tabSize') instanceof Integer) {
+            tabSize = srcConfig.navigate('tabSize')
         }
 
-        if (config.getAt('indentUnit') instanceof Integer) {
-            indentUnit = config.getAt('indentUnit')
+        if (srcConfig.navigate('indentUnit') instanceof Integer) {
+            indentUnit = srcConfig.navigate('indentUnit')
         }
 
-        if (config.getAt('fileStore.remote.defaultPath') instanceof String) {
-            remoteFileStoreDefaultPath = config.getAt('fileStore.remote.defaultPath')
+        if (srcConfig.navigate('fileStore.remote.defaultPath') instanceof String) {
+            remoteFileStoreDefaultPath = srcConfig.navigate('fileStore.remote.defaultPath')
         }
 
-        if (config.getAt('fileStore.remote.enabled') instanceof Boolean) {
-            remoteFileStoreEnabled = config.getAt('fileStore.remote.enabled')
+        if (srcConfig.navigate('fileStore.remote.enabled') instanceof Boolean) {
+            remoteFileStoreEnabled = srcConfig.navigate('fileStore.remote.enabled')
         }
 
-        if (config.getAt('csrfProtection.enabled') instanceof Boolean) {
-            csrfProtectionEnabled = config.getAt('csrfProtection.enabled')
+        if (srcConfig.navigate('csrfProtection.enabled') instanceof Boolean) {
+            csrfProtectionEnabled = srcConfig.navigate('csrfProtection.enabled')
         }
 
-        if (config.getAt('baseUrl') instanceof List || config.getAt('baseUrl') instanceof String) {
-            baseUrl = config.getAt('baseUrl')
+        if (srcConfig.navigate('baseUrl') instanceof List || srcConfig.navigate('baseUrl') instanceof String) {
+            baseUrl = srcConfig.navigate('baseUrl')
         }
     }
 }
